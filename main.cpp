@@ -5,6 +5,7 @@
 
 int main()
 {
+    std::cout << "more text" << std::endl;
     std::cout << "Hello World!" << std::endl;
     return 0;
 }
