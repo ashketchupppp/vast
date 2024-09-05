@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.10)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-project(HelloWorld)
+project(Vast)
 
 find_package(opencv CONFIG REQUIRED)
 
-add_executable(HelloWorld main.cpp)
-
-target_link_libraries(HelloWorld PRIVATE opencv_ml opencv_dnn opencv_core opencv_flann)
+add_subdirectory(src)
