@@ -4,6 +4,7 @@
 #include <GLFW/glfw3.h>
 #include "load_stb_image.hpp"
 #include "shader.hpp"
+#include "videoio.hpp"
 
 unsigned int createShader(int shaderType) {
     unsigned int shader;
@@ -32,7 +33,15 @@ int createShaderProgram(
     return shaderProgram;
 }
 
-int opengl () {
+int opengl (std::string inputFile, std::string outputFile) {
+    // Before we do OpenGL stuff, lets try load out videos
+    Video inputVid(inputFile);
+    const int readRc = inputVid.readOpen();
+    if (!readRc) {
+        return 1;
+    }
+
+    // Now do OpenGL stuff
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);

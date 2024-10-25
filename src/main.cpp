@@ -47,16 +47,15 @@ bool validateOptions(Options opts) {
         return false;
     }
     // Do this check when command line parsing is better and its easier to add a --force option
-    // if (std::filesystem::exists(opts.outputFile)) {
-    //     Log::error(opts.outputFile + " already exists");
-    //     return false;
-    // }
+    if (std::filesystem::exists(opts.outputFile)) {
+        Log::error(opts.outputFile + " already exists");
+        return false;
+    }
     return true;
 }
 
 int main(int argc, char** argv)
 {
-    return opengl();
 
     Options opts = parseArgs(argc, argv);
 
@@ -70,7 +69,9 @@ int main(int argc, char** argv)
         return 1;
     }
 
-    // Do frame difference
+    // Call OpenGL to play our video
+    opengl(opts.inputFile, opts.outputFile);
 
-    return frameDifference(opts.inputFile, opts.outputFile);
+    // Do frame difference
+    // return frameDifference(opts.inputFile, opts.outputFile);
 }
