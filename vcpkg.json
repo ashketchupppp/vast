@@ -1,6 +1,7 @@
 {
   "dependencies": [
     "opencv",
-    "glfw3"
+    "glfw3",
+    "glad"
   ]
 }

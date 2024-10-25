@@ -7,5 +7,7 @@ set(CMAKE_PREFIX_PATH "./vcpkg_installed/x64-windows")
 project(Vast)
 
 find_package(OpenCV CONFIG REQUIRED)
+find_package(glad CONFIG REQUIRED)
+find_package(glfw3 CONFIG REQUIRED)
 
 add_subdirectory(src)
