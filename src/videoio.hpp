@@ -72,6 +72,10 @@ class Video {
             iWriteCap->write(frame);
             return 0;
         }
+
+        double fps() {
+            return iFPS;
+        }
     
     private:
         std::string iPath;

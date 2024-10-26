@@ -4,13 +4,20 @@
 #include <string>
 #include <iostream>
 
+// Logging methods are inlined for performance reasons
+
 namespace Log {
-    void info (std::string msg) {
+    inline void info (std::string msg) {
         std::cout << "INFO: " << msg << std::endl;
     }
 
-    void error (std::string msg) {
+    inline void error (std::string msg) {
         std::cerr << "ERR: " << msg << std::endl;
+    }
+
+    inline void perf (std::string msg, bool endl = false) {
+        std::cout << " PERF: " << msg;
+        if (endl) std::cout << std::endl;
     }
 }
 

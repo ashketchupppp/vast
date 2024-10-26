@@ -6,8 +6,12 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include "logging.hpp"
+
 class Shader {
 public:
+    Shader() {}
+
     Shader (const char * vertexPath, const char * fragmentPath) {
         std::string vertexCode;
         std::string fragmentCode;
@@ -44,35 +48,38 @@ public:
         fragment = glCreateShader(GL_FRAGMENT_SHADER);
         glShaderSource(fragment, 1, &fShaderCode, NULL);
         glCompileShader(fragment);
-        checkCompileErrors(fragment, "FRAGMENT");
+        if (checkCompileErrors(fragment, "FRAGMENT")) throw;
 
         shaderId = glCreateProgram();
         glAttachShader(shaderId, vertex);
         glAttachShader(shaderId, fragment);
 
         glLinkProgram(shaderId);
-        checkCompileErrors(shaderId, "PROGRAM");
+        if (checkCompileErrors(fragment, "PROGRAM")) throw;
 
         glDeleteShader(vertex);
         glDeleteShader(fragment);
     }
+
+    unsigned int id() { return shaderId; }
 
     void use() { 
         glUseProgram(shaderId); 
     }
 
 private:
-    void checkCompileErrors(GLuint shader, std::string type)
+    int checkCompileErrors(GLuint shader, std::string type)
     {
         GLint success;
-        GLchar infoLog[1024];
+        char infoLog[1024];
         if(type != "PROGRAM")
         {
             glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
             if(!success)
             {
                 glGetShaderInfoLog(shader, 1024, NULL, infoLog);
-                std::cout << "ERROR::SHADER_COMPILATION_ERROR of type: " << type << "\n" << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
+                Log::error("SHADER_COMPILATION_ERROR of type: " + type + "\n" + std::string(infoLog));
+                return 1;
             }
         }
         else
@@ -81,9 +88,11 @@ private:
             if(!success)
             {
                 glGetProgramInfoLog(shader, 1024, NULL, infoLog);
-                std::cout << "ERROR::PROGRAM_LINKING_ERROR of type: " << type << "\n" << infoLog << "\n -- --------------------------------------------------- -- " << std::endl;
+                Log::error("PROGRAM_LINKING_ERROR of type: " + type + "\n" + std::string(infoLog));
+                return 1;
             }
         }
+        return 0;
     }
 
     unsigned int shaderId;
