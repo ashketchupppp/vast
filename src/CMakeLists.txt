@@ -8,3 +8,6 @@ target_link_libraries(Vast PRIVATE
     glfw
     glad::glad
 )
+
+configure_file(resources/shader.fs shader.fs COPYONLY)
+configure_file(resources/shader.vs shader.vs COPYONLY)
