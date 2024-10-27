@@ -64,7 +64,7 @@ int opengl (std::string inputFile, std::string outputFile) {
     // --- Compile our shaders as early as possible ---
     Shader shader;
     try {
-        shader = Shader("./shader.vs", "./shader.fs");
+        shader = Shader("./src/resources/shader.vs", "./src/resources/shader.fs");
     } catch (...) {
         Log::error("Failed to compile shaders.");
         return 1;

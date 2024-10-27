@@ -9,5 +9,5 @@ uniform sampler2D ourTexture;
 void main() {
     // We multiply by vec2(1, -1) to flip the image the right way up
     vec2 texColor = TexCoord * vec2(1, -1);
-    FragColor = texture(ourTexture, tanArg);
+    FragColor = texture(ourTexture, texColor);
 }
